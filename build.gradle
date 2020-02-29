@@ -48,6 +48,8 @@ buildscript {
         viewPagerVersion = '1.0.0'
         workVersion = '2.3.2'
         firestoreVersion = '21.4.0'
+        firestoreUiVersion = '6.2.0'
+        facebookLoginVersion = '5.0.0'
     }
 
     repositories {

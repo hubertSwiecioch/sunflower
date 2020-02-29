@@ -16,6 +16,8 @@
 
 package com.google.samples.apps.sunflower
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
@@ -26,5 +28,12 @@ class GardenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView<ActivityGardenBinding>(this, R.layout.activity_garden)
+    }
+
+    companion object {
+
+        fun createIntent(context: Context): Intent {
+            return Intent(context, GardenActivity::class.java)
+        }
     }
 }

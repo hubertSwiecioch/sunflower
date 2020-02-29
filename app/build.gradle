@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
@@ -76,6 +77,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
 
     implementation "com.google.firebase:firebase-firestore:$rootProject.firestoreVersion"
+    implementation "com.firebaseui:firebase-ui-auth:$rootProject.firestoreUiVersion"
+    implementation "com.facebook.android:facebook-login:$rootProject.facebookLoginVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
