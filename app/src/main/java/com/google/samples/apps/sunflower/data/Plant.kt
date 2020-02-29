@@ -32,6 +32,8 @@ data class Plant(
     val imageUrl: String = ""
 ) {
 
+    constructor() : this("", "", "", 0, 0, "")
+
     /**
      * Determines if the plant should be watered.  Returns true if [since]'s date > date of last
      * watering + watering Interval; false otherwise.

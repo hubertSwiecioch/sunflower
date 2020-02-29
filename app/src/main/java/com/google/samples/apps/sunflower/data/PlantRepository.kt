@@ -16,10 +16,21 @@
 
 package com.google.samples.apps.sunflower.data
 
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+
 /**
  * Repository module for handling data operations.
  */
 class PlantRepository private constructor(private val plantDao: PlantDao) {
+
+    private val plantRef = FirebaseFirestore.getInstance()
+            .collection("plants")
+
+    val plantsQuery by lazy {
+        plantRef.orderBy("name", Query.Direction.DESCENDING)
+                .limit(50)
+    }
 
     fun getPlants() = plantDao.getPlants()
 
@@ -31,11 +42,14 @@ class PlantRepository private constructor(private val plantDao: PlantDao) {
     companion object {
 
         // For Singleton instantiation
-        @Volatile private var instance: PlantRepository? = null
+        @Volatile
+        private var instance: PlantRepository? = null
 
         fun getInstance(plantDao: PlantDao) =
                 instance ?: synchronized(this) {
-                    instance ?: PlantRepository(plantDao).also { instance = it }
+                    instance ?: PlantRepository(plantDao).also {
+                        instance = it
+                    }
                 }
     }
 }

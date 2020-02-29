@@ -29,17 +29,11 @@ import com.google.samples.apps.sunflower.data.PlantRepository
  * The ViewModel for [PlantListFragment].
  */
 class PlantListViewModel internal constructor(
-    plantRepository: PlantRepository,
+    private val plantRepository: PlantRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val plants: LiveData<List<Plant>> = getSavedGrowZoneNumber().switchMap {
-        if (it == NO_GROW_ZONE) {
-            plantRepository.getPlants()
-        } else {
-            plantRepository.getPlantsWithGrowZoneNumber(it)
-        }
-    }
+    fun getPlantsQuery() = plantRepository.plantsQuery
 
     fun setGrowZoneNumber(num: Int) {
         savedStateHandle.set(GROW_ZONE_SAVED_STATE_KEY, num)
