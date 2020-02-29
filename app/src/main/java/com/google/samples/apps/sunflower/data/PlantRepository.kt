@@ -16,28 +16,21 @@
 
 package com.google.samples.apps.sunflower.data
 
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 /**
  * Repository module for handling data operations.
  */
-class PlantRepository private constructor(private val plantDao: PlantDao) {
+class PlantRepository private constructor(private val plantDao: PlantDao) : FirestoreRepository() {
 
-    private val plantRef = FirebaseFirestore.getInstance()
-            .collection("plants")
+    private val plantRef = firebaseFirestore.collection("plants")
 
     val plantsQuery by lazy {
         plantRef.orderBy("name", Query.Direction.DESCENDING)
                 .limit(50)
     }
 
-    fun getPlants() = plantDao.getPlants()
-
     fun getPlant(plantId: String) = plantDao.getPlant(plantId)
-
-    fun getPlantsWithGrowZoneNumber(growZoneNumber: Int) =
-            plantDao.getPlantsWithGrowZoneNumber(growZoneNumber)
 
     companion object {
 
