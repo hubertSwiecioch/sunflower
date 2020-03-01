@@ -22,6 +22,8 @@ import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
 
 fun Activity.makeStatusBarTransparent() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -43,4 +45,10 @@ fun View.setMarginTop(marginTop: Int) {
     val menuLayoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
     menuLayoutParams.setMargins(0, marginTop, 0, 0)
     this.layoutParams = menuLayoutParams
+}
+
+fun showSnackBarWithAction(view: View, @StringRes message: Int, @StringRes actionMessage: Int, action: () -> Unit) {
+    val snackBar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
+    snackBar.setAction(actionMessage) {action()}
+    snackBar.show()
 }

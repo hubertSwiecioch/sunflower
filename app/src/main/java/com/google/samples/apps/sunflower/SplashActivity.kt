@@ -21,13 +21,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import com.google.android.material.snackbar.Snackbar
 import com.google.samples.apps.sunflower.extensions.makeStatusBarTransparent
+import com.google.samples.apps.sunflower.extensions.showSnackBarWithAction
 import kotlinx.android.synthetic.main.activity_splash.*
 
 
@@ -76,23 +75,17 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             } else { // Sign in failed
                 if (response == null) { // User pressed back button
-                    showSnackBar(R.string.sign_in_cancelled)
+                    showSnackBarWithAction(splashContainer, R.string.sign_in_cancelled, R.string.retry) { authenticateUser() }
                     return
                 }
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                    showSnackBar(R.string.no_internet_connection)
+                    showSnackBarWithAction(splashContainer, R.string.no_internet_connection, R.string.retry) { authenticateUser() }
                     return
                 }
-                showSnackBar(R.string.unknown_error)
+                showSnackBarWithAction(splashContainer, R.string.unknown_error, R.string.retry) { authenticateUser() }
                 Log.e(SplashActivity::javaClass.name, "Sign-in error: ", response.error)
             }
         }
-    }
-
-    private fun showSnackBar(@StringRes message: Int) {
-        val snackBar = Snackbar.make(splashContainer, message, Snackbar.LENGTH_INDEFINITE)
-        snackBar.setAction(R.string.retry) { authenticateUser() }
-        snackBar.show()
     }
 
     companion object {
