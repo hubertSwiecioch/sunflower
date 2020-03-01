@@ -17,19 +17,23 @@
 <resources>
 
     <!-- To see how these attributes are used, please visit https://material.io/develop/android/theming/color/ -->
-    <style name="Base.Theme.Sunflower" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-    </style>
+    <style name="Base.Theme.Sunflower" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
-    <style name="Theme.Sunflower" parent="Base.Theme.Sunflower"/>
+    <style name="Theme.Sunflower" parent="Base.Theme.Sunflower" />
 
     <style name="Theme.Sunflower.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Sunflower.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+    <style name="Theme.Sunflower.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-    <style name="TextAppearance.Sunflower.Toolbar.Text" parent="TextAppearance.MaterialComponents.Headline5" >
+    <style name="TextAppearance.Sunflower.Toolbar.Text" parent="TextAppearance.MaterialComponents.Headline5" />
+
+    <style name="AppTheme.SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
 </resources>

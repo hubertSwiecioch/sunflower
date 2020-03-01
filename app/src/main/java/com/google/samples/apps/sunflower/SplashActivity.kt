@@ -19,19 +19,32 @@ package com.google.samples.apps.sunflower
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
+import com.google.android.material.snackbar.Snackbar
+import com.google.samples.apps.sunflower.extensions.makeStatusBarTransparent
+import kotlinx.android.synthetic.main.activity_splash.*
 
 
-class SignInActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
+
+    private val splashTime = 3000L // 3 seconds
+    private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        authenticateUser()
+        setContentView(R.layout.activity_splash)
+        makeStatusBarTransparent()
+
+        handler = Handler()
+        handler.postDelayed({
+            authenticateUser()
+        }, splashTime)
     }
 
     private fun authenticateUser() {
@@ -63,17 +76,23 @@ class SignInActivity : AppCompatActivity() {
                 finish()
             } else { // Sign in failed
                 if (response == null) { // User pressed back button
-                    Toast.makeText(this, R.string.sign_in_cancelled, Toast.LENGTH_LONG).show()
+                    showSnackBar(R.string.sign_in_cancelled)
                     return
                 }
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                    Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_LONG).show()
+                    showSnackBar(R.string.no_internet_connection)
                     return
                 }
-                Toast.makeText(this, R.string.unknown_error, Toast.LENGTH_LONG).show()
-                Log.e(SignInActivity::javaClass.name, "Sign-in error: ", response.error)
+                showSnackBar(R.string.unknown_error)
+                Log.e(SplashActivity::javaClass.name, "Sign-in error: ", response.error)
             }
         }
+    }
+
+    private fun showSnackBar(@StringRes message: Int) {
+        val snackBar = Snackbar.make(splashContainer, message, Snackbar.LENGTH_INDEFINITE)
+        snackBar.setAction(R.string.retry) { authenticateUser() }
+        snackBar.show()
     }
 
     companion object {
